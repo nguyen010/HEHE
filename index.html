@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyễn Bằng Nguyên - Trang Cá Nhân</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('anhday.jpg') no-repeat center center fixed;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-color: black;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            margin-top: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #4CAF50;
+        }
+        h1 {
+            color: #333;
+            margin: 10px 0;
+        }
+        p {
+            color: #555;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        .social-links {
+            margin-top: 20px;
+        }
+        .social-links a {
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 20px;
+            color: #4CAF50;
+        }
+        .info-box {
+            margin-top: 20px;
+            padding: 10px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+        .music {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .music img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .spinning {
+            animation: spin 4s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .song-title {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        iframe {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="ảnhneh.jpg" alt="Ảnh đại diện">
+        <h1>Hoàng Minh Đạt</h1>
+        <p><strong>Ngày sinh:</strong> 02/05/2003</p>
+        <p><strong>Địa chỉ:</strong> TP. Hồ Chí Minh, Quận Bình Tân</p>
+        <div class="info-box">
+            <p><strong>Chiều cao:</strong> 1m8, <strong>Cân nặng:</strong> 70kg</p>
+        </div>
+        <div class="social-links">
+            <a href="https://www.facebook.com/athoang.663155/" target="_blank">Facebook</a>
+            <a href="https://www.instagram.com/xsfeko" target="_blank">Instagram</a>
+        </div>
+        <div class="music">
+            <img id="music-disc" src="haha.png" alt="Đĩa nhạc">
+            <p class="song-title">Bài hát: <span id="song-name">Mất Kết Nối</span></p>
+            <iframe id="youtube-player" width="0" height="0" src="https://www.youtube.com/embed/lRsaDQtYqAo?enablejsapi=1" allow="autoplay"></iframe>
+        </div>
+    </div>
+
+    <script>
+        let isPlaying = false;
+        let player;
+        
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            const musicDisc = document.getElementById("music-disc");
+
+            musicDisc.addEventListener("click", function() {
+                if (isPlaying) {
+                    player.pauseVideo();
+                    musicDisc.classList.remove("spinning");
+                } else {
+                    player.seekTo(0);
+                    player.playVideo();
+                    musicDisc.classList.add("spinning");
+                    setTimeout(() => {
+                        player.pauseVideo();
+                        musicDisc.classList.remove("spinning");
+                        isPlaying = false;
+                    }, 20000); // Dừng sau 20 giây
+                }
+                isPlaying = !isPlaying;
+            });
+        }
+
+        // Load YouTube API
+        const script = document.createElement('script');
+        script.src = "https://www.youtube.com/iframe_api";
+        document.body.appendChild(script);
+    </script>
+</body>
+</html>
